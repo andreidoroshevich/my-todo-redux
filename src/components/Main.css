@@ -1,0 +1,61 @@
+.main {
+    /*width: 230px;*/
+    max-height: 175px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    overflow-y: auto;
+
+}
+
+.main::-webkit-scrollbar {
+    width: 5px;
+    background-color: whitesmoke;
+}
+
+
+.del_button {
+    margin-left: 13px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.task {
+    width: 160px;
+    margin-left: -40px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.flex {
+    display: flex;
+    padding-bottom: 12px;
+}
+
+.tasklist {
+    width: 220px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+button {
+    margin-left: 18px;
+}
+
+.task li {
+    /*overflow: hidden;*/
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.filterbutton button {
+    margin-left: 10px;
+}
+
+.addbutton {
+    margin-left: 20px;
+}
+
+.maintitle {
+    margin-bottom: -10px;
+}
