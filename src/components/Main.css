@@ -1,61 +1,50 @@
 .main {
-    /*width: 230px;*/
-    max-height: 175px;
+    max-height: 220px;
     margin-top: 20px;
     margin-bottom: 20px;
     display: flex;
     overflow-y: auto;
-
-}
-
-.main::-webkit-scrollbar {
-    width: 5px;
-    background-color: whitesmoke;
-}
-
-
-.del_button {
-    margin-left: 13px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.task {
-    width: 160px;
-    margin-left: -40px;
-    display: flex;
-    justify-content: flex-start;
-}
-
-.flex {
-    display: flex;
-    padding-bottom: 12px;
+    overflow-x: hidden;
+    opacity: 0.7;
+    border-radius: 10px;
 }
 
 .tasklist {
-    width: 220px;
-    display: flex;
-    justify-content: flex-start;
-}
-
-button {
-    margin-left: 18px;
-}
-
-.task li {
-    /*overflow: hidden;*/
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    max-width: 240px;
+    border-radius: 10px;
 }
 
 .filterbutton button {
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 .addbutton {
     margin-left: 20px;
+    font-size: 18px;
 }
 
 .maintitle {
     margin-bottom: -10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.tdCheckbox {
+    width: 20%;
+    padding-top: 6px;
+}
+
+.tdButton {
+    width: 20%;
+}
+
+.tdTask {
+    max-width: 60px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

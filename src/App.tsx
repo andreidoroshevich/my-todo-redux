@@ -18,6 +18,8 @@ import {
 } from "./reducers/TodoListsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
+import {AddBox} from "@material-ui/icons";
+import {IconButton} from "@material-ui/core";
 
 export type TaskType = {
     id: string
@@ -98,9 +100,13 @@ function App() {
         <>
             <div className={"newtodo"}>
                 <UnchangibleHeader title={"Add new Todolist"}/>
+
                 <Input setError={setError} setTitle={setTitle} title={title} addTaskButtonHandler={addTodolist}
                        className={error ? 'error' : ''}/>
-                <Button callBack={() => addTodolist(title)} title={'+'}/>
+
+                <IconButton color="primary" onClick={() => addTodolist(title)}>
+                    <AddBox />
+                </IconButton>
                 {error && <div className={'error-message'}>Field is required</div>}
             </div>
 

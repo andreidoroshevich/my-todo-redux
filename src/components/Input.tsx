@@ -1,4 +1,5 @@
 import React from 'react';
+import {TextField} from "@material-ui/core";
 
 type InputType = {
     setTitle: (title: string)=>void
@@ -11,15 +12,19 @@ type InputType = {
 
 const Input = (props: InputType) => {
     return (
-        <input value={props.title} className={props.className}
-               onChange={e => props.setTitle(e.currentTarget.value)}
-               onKeyPress={(e) =>{
-                   props.setError(null)
-                   if (e.key === 'Enter') {
-                       props.addTaskButtonHandler(props.title)
-                   }
-               }}
-        />
+
+
+        <TextField value={props.title} label="Title"
+                   variant="outlined"
+                   className={props.className}
+                   onChange={e => props.setTitle(e.currentTarget.value)}
+                   onKeyPress={(e) =>{
+                       props.setError(null)
+                       if (e.key === 'Enter') {
+                           props.addTaskButtonHandler(props.title)
+                       }
+                   }}/>
+
 
     );
 };

@@ -3,6 +3,9 @@ import {TaskType} from "../App";
 import Button from "./Button";
 import './Main.css';
 import {EditableSpan} from "./EditableSpan";
+import {IconButton} from "@material-ui/core";
+import {Delete} from '@material-ui/icons';
+
 
 type TaskListType = {
     todoListID: string
@@ -29,29 +32,29 @@ const TaskList = (props: TaskListType) => {
 
     return (
         <div className={'main'}>
-            <div className={'tasklist'}>
-                <ul>
+                <table>
+
                     {props.tasks.map(t =>
-                        <div className={'flex'} key={t.id}>
-                            <div className={'task'}>
-                                <li className={t.isDone ? 'is-done' : ''}>
-                                    <input type="checkbox"
-                                           onChange={(e) => onChangeCheckBoxHandler(props.todoListID, t.id, e.currentTarget.checked)}
-                                           checked={t.isDone}/>
-                                    <EditableSpan
+                            <tr className={'tdCheckbox'}>
+                                    <td className={'tdCheckbox'}>
+                                        <input type="checkbox"
+                                               onChange={(e) => onChangeCheckBoxHandler(props.todoListID, t.id, e.currentTarget.checked)}
+                                               checked={t.isDone}/>
+                                    </td>
+                                    <td className={'tdTask'}><EditableSpan
                                         title={t.title}
                                         onChange={(newValue) => onChangeTitleHandler(t.id, newValue, props.todoListID)}/>
-                                </li>
+                                    </td>
 
-                            </div>
-                            <div className={'del_button'}>
-                                <Button
-                                callBack={() => onClickRemoveHandler(t.id, props.todoListID)}
-                                title={'x'}/></div>
-                        </div>
-                    )}
-                </ul>
-            </div>
+                            <td className={'tdButton'}>
+                                <IconButton aria-label="delete" onClick={() => onClickRemoveHandler(t.id, props.todoListID)}>
+                                    <Delete />
+                                </IconButton>
+
+                            </td>
+                        </tr>
+                        )}
+                </table>
 
         </div>
     );

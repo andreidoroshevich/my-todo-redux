@@ -1,24 +1,26 @@
 .App {
     padding: 30px;
     display: flex;
-    width: 220px;
-    background-color: whitesmoke;
+    border: 1px solid lightgrey;
     border-radius: 10px;
     box-shadow: 5px 5px 5px lightgrey;
     margin: 20px;
 }
 
-.App > div {
-    margin-right: 50px;
+
+input {
+    border-radius: 5px;
+    height: 40px;
 }
 
-button, input {
-    cursor: pointer;
+span {
+    display: inline-block;
 }
+
 button {
+    cursor: pointer;
     border-radius: 5px;
-    background-color: cornflowerblue;
-    color: white;
+    color: grey;
     font-size: 14px;
 }
 
@@ -42,11 +44,11 @@ button {
 
 .flex-row {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .delTodoList {
-    position: absolute;
-    margin-left: 190px;
+    margin-left: 260px;
     margin-top: -15px;
     cursor: pointer;
 }
@@ -63,7 +65,5 @@ button {
 
 .newtodo {
     margin: 20px;
-    position: relative;
-
 }
 
