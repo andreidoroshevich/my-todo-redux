@@ -2,24 +2,13 @@ import React, {useState} from 'react';
 import './App.css';
 import TodoList from "./components/TodoList";
 import Input from "./components/Input";
-import Button from "./components/Button";
-import UnchangibleHeader from "./components/UnchangibleHeader";
-import {
-    addTaskAC,
-    changeStatusTaskAC,
-    changeTitleTaskAC,
-    removeTaskAC,
-} from "./reducers/TasksReducer";
-import {
-    addTodoListAC,
-    changeTodoListTitleAC,
-    filterAC,
-    removeTodoListAC,
-} from "./reducers/TodoListsReducer";
+import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC,} from "./reducers/TasksReducer";
+import {addTodoListAC, changeTodoListTitleAC, filterAC, removeTodoListAC,} from "./reducers/TodoListsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
 import {AddBox} from "@material-ui/icons";
 import {IconButton} from "@material-ui/core";
+import UnchangeableHeader from "./components/UnchangeableHeader";
 
 export type TaskType = {
     id: string
@@ -45,8 +34,8 @@ function App() {
     let [error, setError] = useState<string | null>(null)
 
     const dispatch = useDispatch()
-    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state=>state.todoList)
-    const tasks = useSelector<AppRootStateType, TaskObjectType>(state=>state.tasks)
+    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todoList)
+    const tasks = useSelector<AppRootStateType, TaskObjectType>(state => state.tasks)
 
 //функция удаления таски
     const removeTask = (taskID: string, todoListId: string) => {
@@ -59,7 +48,7 @@ function App() {
     }
 
 //функция добавления новых таск
-    const addTask = (title: string, todoListID: string ) => {
+    const addTask = (title: string, todoListID: string) => {
         dispatch(addTaskAC(todoListID, title))
     }
 
@@ -98,14 +87,14 @@ function App() {
 
     return (
         <>
-            <div className={"newtodo"}>
-                <UnchangibleHeader title={"Add new Todolist"}/>
+            <div className={"newTodo"}>
+                <UnchangeableHeader title={"Add new Todolist"}/>
 
                 <Input setError={setError} setTitle={setTitle} title={title} addTaskButtonHandler={addTodolist}
                        className={error ? 'error' : ''}/>
 
                 <IconButton color="primary" onClick={() => addTodolist(title)}>
-                    <AddBox />
+                    <AddBox/>
                 </IconButton>
                 {error && <div className={'error-message'}>Field is required</div>}
             </div>
@@ -142,7 +131,7 @@ function App() {
                 })
                 }
             </div>
-                  </>
+        </>
     );
 }
 

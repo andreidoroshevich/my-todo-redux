@@ -9,21 +9,12 @@
     border-radius: 10px;
 }
 
-.tasklist {
-    max-width: 240px;
-    border-radius: 10px;
-}
-
-.filterbutton button {
+.filterButton button {
     margin-left: 15px;
 }
 
-.addbutton {
-    margin-left: 20px;
-    font-size: 18px;
-}
 
-.maintitle {
+.mainTitle {
     margin-bottom: -10px;
 }
 

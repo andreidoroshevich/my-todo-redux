@@ -49,7 +49,7 @@ const TodoList = (props: ToDoListType) => {
                             <Delete/>
                         </IconButton></span>
 
-                    {/*<Button callBack={removeTodoListHandler} title={'x'}/>*/}
+                {/*<Button callBack={removeTodoListHandler} title={'x'}/>*/}
                 <Header id={props.id} title={props.title} changeTodoListTitle={props.changeTodoListTitle}/>
                 <div>
                     <Input setError={setError} setTitle={setTitle} title={title}
@@ -63,7 +63,7 @@ const TodoList = (props: ToDoListType) => {
                               changeTaskStatus={props.changeTaskStatus} todoListID={props.id}
                               changeTaskTitle={props.changeTaskTitle}
                     />
-                    <div className={'filterbutton'}>
+                    <div className={'filterButton'}>
 
                         <Button variant={props.filter === 'All' ? 'outlined' : 'text'}
                                 onClick={() => props.changeFilter('All', props.id)}
