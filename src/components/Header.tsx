@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {EditableSpan} from "./EditableSpan";
 
 
@@ -8,15 +8,15 @@ type HeaderType = {
     changeTodoListTitle: (todoListID: string, newTitle: string) => void
 }
 
-const Header = (props: HeaderType) => {
+const Header = React.memo((props: HeaderType) => {
 
-    const changeTodoListTitle = (newTitle: string) => {
+    const changeTodoListTitle = useCallback((newTitle: string) => {
         props.changeTodoListTitle(props.id, newTitle)
-    }
+    },[props.changeTodoListTitle, props.id])
 
     return (
         <h3><EditableSpan title={props.title} onChange={changeTodoListTitle}/></h3>
     );
-};
+});
 
 export default Header;

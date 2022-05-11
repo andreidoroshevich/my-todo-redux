@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import Header from "./Header";
 import TaskList from "./TaskList";
 import {FilterType, TaskType} from "../App";
-import Input from "./Input";
+import {Input} from "./Input";
 import '../App.css'
 import {Button, IconButton} from "@material-ui/core";
 import {AddBox, Delete} from "@material-ui/icons";
@@ -13,33 +13,38 @@ type ToDoListType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (id: string, todoListID: string) => void
-    changeFilter: (filter: FilterType, todoListID: string) => void
+    changeFilter: (todoListID: string, filter: FilterType) => void
     addTask: (title: string, todoListID: string) => void
     changeTaskStatus: (todoListID: string, taskID: string, isDone: boolean) => void
     removeTodoList: (todoListID: string) => void
     changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void
     changeTodoListTitle: (todoListID: string, newTitle: string) => void
-    filter: string
+    filter: FilterType
 }
 
-const TodoList = (props: ToDoListType) => {
-
+const TodoList =React.memo( (props: ToDoListType) => {
     let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 
 
-    const addTaskButtonHandler = (title: string) => {
-        if (title.trim() !== '') {
-            props.addTask(title.trim(), props.id)
-            setTitle('')
-        } else {
-            setError('Title is required')
-        }
-    }
+    const addTaskButtonHandler = useCallback((title: string) => {
+            if (title.trim() !== '') {
+                props.addTask(title.trim(), props.id)
+                setTitle('')
+            } else {
+                setError('Title is required')
+            }
+        }, [props.addTask, props.id])
 
     const removeTodoListHandler = () => {
         props.removeTodoList(props.id)
     }
+
+    const onAllClickHandler = useCallback(() => props.changeFilter(props.id,"All"),[props.changeFilter, props.id]);
+    const onActiveClickHandler = useCallback(() => props.changeFilter(props.id,"Active"),[props.changeFilter, props.id]);
+    const onCompletedClickHandler = useCallback(() => props.changeFilter(props.id,"Completed"),[props.changeFilter, props.id]);
+
+
 
     return (
         <div className="App">
@@ -62,20 +67,21 @@ const TodoList = (props: ToDoListType) => {
                     <TaskList tasks={props.tasks} removeTask={props.removeTask}
                               changeTaskStatus={props.changeTaskStatus} todoListID={props.id}
                               changeTaskTitle={props.changeTaskTitle}
+                              filter={props.filter}
                     />
                     <div className={'filterButton'}>
 
                         <Button variant={props.filter === 'All' ? 'outlined' : 'text'}
-                                onClick={() => props.changeFilter('All', props.id)}
+                                onClick={onAllClickHandler}
                                 color={'default'}
                         >All
                         </Button>
                         <Button variant={props.filter === 'Active' ? 'outlined' : 'text'}
-                                onClick={() => props.changeFilter('Active', props.id)}
+                                onClick={onActiveClickHandler}
                                 color={'primary'}>Active
                         </Button>
-                        <Button variant={props.filter === 'completed' ? 'outlined' : 'text'}
-                                onClick={() => props.changeFilter('Completed', props.id)}
+                        <Button variant={props.filter === 'Completed' ? 'outlined' : 'text'}
+                                onClick={onCompletedClickHandler}
                                 color={'secondary'}>Completed
                         </Button>
 
@@ -91,6 +97,6 @@ const TodoList = (props: ToDoListType) => {
             </div>
         </div>
     );
-};
+});
 
 export default TodoList;

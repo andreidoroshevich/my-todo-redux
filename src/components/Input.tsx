@@ -2,15 +2,15 @@ import React from 'react';
 import {TextField} from "@material-ui/core";
 
 type InputType = {
-    setTitle: (title: string)=>void
+    setTitle: (title: string) => void
     title: string
     className: string
-    addTaskButtonHandler: (title:string)=>void
-    setError: (error: null)=>void
+    addTaskButtonHandler: (title: string) => void
+    setError: (error: null) => void
 }
 
 
-const Input = (props: InputType) => {
+export const Input = React.memo((props: InputType) => {
     return (
 
 
@@ -18,8 +18,10 @@ const Input = (props: InputType) => {
                    variant="outlined"
                    className={props.className}
                    onChange={e => props.setTitle(e.currentTarget.value)}
-                   onKeyPress={(e) =>{
-                       props.setError(null)
+                   onKeyPress={(e) => {
+                       if (props.setError(null) !== null) {
+                           props.setError(null)
+                       }
                        if (e.key === 'Enter') {
                            props.addTaskButtonHandler(props.title)
                        }
@@ -27,6 +29,5 @@ const Input = (props: InputType) => {
 
 
     );
-};
+});
 
-export default Input;
