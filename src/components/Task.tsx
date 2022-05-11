@@ -24,7 +24,7 @@ export const Task = React.memo((props: TaskPropsType) => {
 
     const onChangeTitleHandler = useCallback((newValue: string) => {
         props.changeTaskTitle(props.task.id, newValue, props.todoListID)
-    }, [props.changeTaskTitle, props.todoListID, props.task.id, props.task.isDone])
+    }, [props.changeTaskTitle, props.todoListID, props.task.id])
 
         return (
         <tr className={'tdCheckbox'} key={props.task.id}>

@@ -23,6 +23,7 @@ type ToDoListType = {
 }
 
 const TodoList =React.memo( (props: ToDoListType) => {
+
     let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 

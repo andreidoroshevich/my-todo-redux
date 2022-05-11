@@ -12,8 +12,6 @@ type InputType = {
 
 export const Input = React.memo((props: InputType) => {
     return (
-
-
         <TextField value={props.title} label="Title"
                    variant="outlined"
                    className={props.className}
