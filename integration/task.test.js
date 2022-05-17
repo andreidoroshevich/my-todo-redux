@@ -7,3 +7,4 @@ describe('Task', () => {
         expect(image).toMatchImageSnapshot();
     });
 });
+
