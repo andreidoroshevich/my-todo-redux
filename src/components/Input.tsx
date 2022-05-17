@@ -4,7 +4,7 @@ import {TextField} from "@material-ui/core";
 type InputType = {
     setTitle: (title: string) => void
     title: string
-    className: string
+    className?: string
     addTaskButtonHandler: (title: string) => void
     setError: (error: null) => void
 }
