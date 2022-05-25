@@ -60,7 +60,7 @@ export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         const todolistId = '84d74c97-4333-4fd3-8ee3-04c04cb455ea'
-        const title = "MY new task"
+        const title = "MY new1 task"
         TasksAPI.createTask(todolistId, title)
             .then((data) => setState(data))
     }, [])
@@ -83,7 +83,7 @@ export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         const todolistId = '84d74c97-4333-4fd3-8ee3-04c04cb455ea'
-        const taskId = '0a12e309-1d25-4b00-8cb4-6e57a798f2c5'
+        const taskId = 'a7d38371-2834-4352-ba4d-ef0e400cad6c'
         TasksAPI.deleteTask(todolistId, taskId)
             .then((data) => setState(data))
     }, [])
