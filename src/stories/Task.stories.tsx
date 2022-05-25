@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Task} from "./Task";
+import {Task} from "../components/Task";
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import {action} from "@storybook/addon-actions";
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from "./Button";
+import Button from "../components/Button";
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import {action} from "@storybook/addon-actions";
 
@@ -14,8 +14,9 @@ export default {
             description: "callback"
         },
         className: {
-            description: 'optional parameter'
-        }
+            description: 'optional parameter',
+        },
+        backgroundColor: {control: 'color'}
     }
 } as ComponentMeta<typeof Button>
 
