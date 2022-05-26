@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Task} from "../components/Task";
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import {action} from "@storybook/addon-actions";
+import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 
 export default {
     title: 'Task',
@@ -31,13 +32,40 @@ export default {
 } as ComponentMeta<typeof Task>
 
 const Template: ComponentStory<typeof Task> = () => {
-    const [task, setTask] = useState({id: '1111', isDone: true, title: 'React TS'})
-    const changeTaskStatus = ()=>setTask({id: '1111', isDone: !task.isDone, title: 'React TS'})
+    const [task, setTask] = useState(
+        {
+        id: '1111',
+        status: TaskStatuses.Completed,
+        title: 'React TS',
+        todoListId: "1111",
+        order: 0,
+        description: '',
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        addedDate: ''
+        }
+    )
+    const changeTaskStatus = ()=>setTask(
+        {
+            id: '1111',
+            status: TaskStatuses.New,
+            title: 'React TS',
+            todoListId: "1111",
+            order: 0,
+            description: '',
+            priority: TaskPriorities.Low,
+            startDate: '',
+            deadline: '',
+            addedDate: ''
+        }
+    )
     return <Task todoListID={'1'}
                  removeTask={action('removeTask')}
                  changeTaskStatus={changeTaskStatus}
                  changeTaskTitle={action('changeTaskTitle')}
-                 task={task}/>
+                 task={task}
+    />
 }
 
 // export const TaskIsDoneStory = Template.bind({})

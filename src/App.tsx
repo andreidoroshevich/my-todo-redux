@@ -3,25 +3,21 @@ import './App.css';
 import TodoList from "./components/TodoList";
 import {Input} from "./components/Input";
 import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC,} from "./reducers/TasksReducer";
-import {addTodoListAC, changeTodoListTitleAC, filterAC, removeTodoListAC,} from "./reducers/TodoListsReducer";
+import {
+    addTodoListAC,
+    changeTodoListTitleAC,
+    filterAC, FilterType,
+    removeTodoListAC,
+    TodoListDomainType,
+} from "./reducers/TodoListsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
 import {AddBox} from "@material-ui/icons";
 import {IconButton} from "@material-ui/core";
 import UnchangeableHeader from "./components/UnchangeableHeader";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
-export type FilterType = 'All' | 'Completed' | 'Active' //типизация для сортировки
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterType
-}
 
 export type TaskObjectType = {
     [key: string]: TaskType[]
@@ -34,7 +30,7 @@ function App() {
     let [error, setError] = useState<string | null>(null)
 
     const dispatch = useDispatch()
-    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todoList)
+    const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoList)
     const tasks = useSelector<AppRootStateType, TaskObjectType>(state => state.tasks)
 
 //функция удаления таски
@@ -53,8 +49,8 @@ function App() {
     },[dispatch])
 
 // функция изменения статуса таски - работа с чекбоксами
-    const changeTaskStatus = useCallback((todoListID: string, taskID: string, isDoneValue: boolean) => {
-        dispatch(changeStatusTaskAC(todoListID, taskID, isDoneValue))
+    const changeTaskStatus = useCallback((todoListID: string, taskID: string, status: TaskStatuses) => {
+        dispatch(changeStatusTaskAC(todoListID, taskID, status))
     },[dispatch])
 
 // функция изменения названия таски
@@ -102,17 +98,6 @@ function App() {
             <div className={'flex-row'}>
 
                 {todoLists.map((tl) => {
-                    // let allTodolistTasks = tasks[tl.id]
-                    // let tasksForTodolist = allTodolistTasks;
-
-                    // if (tl.filter === "Completed") {
-                    //     filteredTasks = tasks[tl.id].filter(t => t.isDone)
-                    // }
-                    // if (tl.filter === "Active") {
-                    //     filteredTasks = tasks[tl.id].filter(t => !t.isDone)
-                    // }
-
-
                     return (
 
                         <TodoList

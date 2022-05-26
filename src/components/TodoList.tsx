@@ -1,11 +1,12 @@
 import React, {useCallback, useState} from 'react';
 import Header from "./Header";
 import TaskList from "./TaskList";
-import {FilterType, TaskType} from "../App";
 import {Input} from "./Input";
 import '../App.css'
 import {Button, IconButton} from "@material-ui/core";
 import {AddBox, Delete} from "@material-ui/icons";
+import {TaskStatuses, TaskType} from "../api/todolist-api";
+import {FilterType} from "../reducers/TodoListsReducer";
 
 
 type ToDoListType = {
@@ -15,7 +16,7 @@ type ToDoListType = {
     removeTask: (id: string, todoListID: string) => void
     changeFilter: (todoListID: string, filter: FilterType) => void
     addTask: (title: string, todoListID: string) => void
-    changeTaskStatus: (todoListID: string, taskID: string, isDone: boolean) => void
+    changeTaskStatus: (todoListID: string, taskID: string, status: TaskStatuses) => void
     removeTodoList: (todoListID: string) => void
     changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void
     changeTodoListTitle: (todoListID: string, newTitle: string) => void

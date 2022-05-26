@@ -1,7 +1,8 @@
 import React from 'react';
-import {FilterType, TaskType} from "../App";
 import './Main.css';
 import {Task} from "./Task";
+import {TaskStatuses, TaskType} from "../api/todolist-api";
+import {FilterType} from "../reducers/TodoListsReducer";
 
 
 type TaskListType = {
@@ -9,7 +10,7 @@ type TaskListType = {
     tasks: Array<TaskType>
     filter: FilterType
     removeTask: (id: string, todoListID: string) => void
-    changeTaskStatus: (todoListID: string, taskID: string, isDone: boolean) => void
+    changeTaskStatus: (todoListID: string, taskID: string, status: TaskStatuses) => void
     changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void
 }
 
@@ -17,10 +18,10 @@ const TaskList = React.memo((props: TaskListType) => {
 
     let tasksForTodolist = props.tasks
     if (props.filter === "Completed") {
-        tasksForTodolist = tasksForTodolist.filter(t => t.isDone)
+        tasksForTodolist = tasksForTodolist.filter(t => t.status===TaskStatuses.Completed)
     }
     if (props.filter === "Active") {
-        tasksForTodolist = tasksForTodolist.filter(t => !t.isDone)
+        tasksForTodolist = tasksForTodolist.filter(t => t.status===TaskStatuses.New)
     }
 
     return (
