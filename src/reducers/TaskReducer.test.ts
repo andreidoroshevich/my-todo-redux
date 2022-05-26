@@ -434,11 +434,11 @@ test('property with todolistId should be deleted', () => {
     const startState: TaskObjectType = {
         [todoListId1]: [
             {
-                id: taskId1,
+                id: todoListId1,
                 title: "HTML&CSS",
                 status: TaskStatuses.New,
                 description: '',
-                todoListId: "todolistId1",
+                todoListId: todoListId1,
                 order: 0,
                 priority: TaskPriorities.Low,
                 startDate: '',
@@ -446,11 +446,11 @@ test('property with todolistId should be deleted', () => {
                 addedDate: '',
             },
             {
-                id: taskId2,
+                id: todoListId1,
                 title: "JS/ES6",
                 status: TaskStatuses.Completed,
                 description: '',
-                todoListId: "todolistId1",
+                todoListId: todoListId1,
                 order: 0,
                 priority: TaskPriorities.Low,
                 startDate: '',
@@ -458,11 +458,11 @@ test('property with todolistId should be deleted', () => {
                 addedDate: '',
             },
             {
-                id: taskId3,
+                id: todoListId1,
                 title: "React",
                 status: TaskStatuses.New,
                 description: '',
-                todoListId: "todolistId1",
+                todoListId: todoListId1,
                 order: 0,
                 priority: TaskPriorities.Low,
                 startDate: '',
@@ -472,11 +472,11 @@ test('property with todolistId should be deleted', () => {
         ],
         [todoListId2]: [
             {
-                id: taskId1,
+                id: todoListId2,
                 title: "Milk",
                 status: TaskStatuses.New,
                 description: '',
-                todoListId: "todolistId2",
+                todoListId: todoListId2,
                 order: 0,
                 priority: TaskPriorities.Low,
                 startDate: '',
@@ -484,11 +484,11 @@ test('property with todolistId should be deleted', () => {
                 addedDate: '',
             },
             {
-                id: taskId2,
+                id: todoListId2,
                 title: "Sugar",
                 status: TaskStatuses.Completed,
                 description: '',
-                todoListId: "todolistId2",
+                todoListId: todoListId2,
                 order: 0,
                 priority: TaskPriorities.Low,
                 startDate: '',
@@ -496,11 +496,11 @@ test('property with todolistId should be deleted', () => {
                 addedDate: '',
             },
             {
-                id: taskId3,
+                id: todoListId2,
                 title: "Book",
                 status: TaskStatuses.New,
                 description: '',
-                todoListId: "todolistId2",
+                todoListId: todoListId2,
                 order: 0,
                 priority: TaskPriorities.Low,
                 startDate: '',
@@ -509,7 +509,9 @@ test('property with todolistId should be deleted', () => {
             },
         ],
     };
-    const action = removeTodoListAC("todolistId2");
+    const action = removeTodoListAC(todoListId1);
     const endState = TasksReducer(startState, action)
-    expect(endState["todolistId2"]).not.toBeDefined();
+    const keys = Object.keys(endState);
+    expect(keys.length).toBe(1);
+    expect(endState["todolistId1"]).not.toBeDefined();
 });

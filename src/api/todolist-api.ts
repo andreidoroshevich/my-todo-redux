@@ -57,7 +57,6 @@ type CommonResponseType<T> = {
     data: T
 }
 
-
 export const TodoListAPI = {
     updateTodoList: (todolistId: string, title: string) => {
         return instance.put<CommonResponseType<{}>>(`todo-lists/${todolistId}`, {title: title})
