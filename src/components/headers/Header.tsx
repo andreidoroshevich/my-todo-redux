@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "../../common/components/EditableSpan";
 
 
 type HeaderType = {

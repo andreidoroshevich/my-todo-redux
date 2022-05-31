@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input} from "../components/Input";
+import {Input} from "../common/components/Input";
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import {action} from "@storybook/addon-actions";
 

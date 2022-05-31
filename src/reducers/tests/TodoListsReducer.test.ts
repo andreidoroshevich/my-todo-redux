@@ -1,12 +1,19 @@
 import {v1} from "uuid";
-import {FilterType, TodoListDomainType, TodoListsReducer} from "./TodoListsReducer";
+import {FilterType, setTodoListsAC, TodoListDomainType, TodoListsReducer} from "../TodoListsReducer";
+import {TodoListType} from "../../api/todolist-api";
 
 test("add new todolist", ()=>{
     let todoListId1 = v1()
     let todoListId2 = v1()
     let todoListId3 = v1()
 
-    let newTodoListTitle = "NewTodoList"
+    let todoList: TodoListType = {
+        title: "NewTodoList",
+        id: "some new id",
+        order: 0,
+        addedDate: ""
+    }
+
     const startState: Array<TodoListDomainType> = [
         {
             id: todoListId1,
@@ -23,9 +30,9 @@ test("add new todolist", ()=>{
             order: 0
         },
     ]
-    const endState = TodoListsReducer(startState, {type: "ADD-TODOLIST", title: newTodoListTitle, todoListID: todoListId3 })
+    const endState = TodoListsReducer(startState, {type: "ADD-TODOLIST", todoList})
     expect(endState.length).toBe(3)
-    expect(endState[0].title).toBe(newTodoListTitle)
+    expect(endState[0].title).toBe(todoList.title)
     expect(endState[0].filter).toBe("All")
 })
 
@@ -111,4 +118,31 @@ test("correct todolist should change filter", ()=>{
     expect(endState[1].filter).toBe(newTodoListFilter)
 
 })
+
+test("todoLists should be set to the state", ()=>{
+    let todoListId1 = v1()
+    let todoListId2 = v1()
+
+    const startState: Array<TodoListDomainType> = [
+        {
+            id: todoListId1,
+            title: "What to learn",
+            filter: "All",
+            addedDate: '',
+            order: 0
+        },
+        {
+            id: todoListId2,
+            title: "What to buy",
+            filter: "All",
+            addedDate: '',
+            order: 0
+        },
+    ]
+    const action = setTodoListsAC(startState)
+    const endState = TodoListsReducer([], action)
+
+    expect(endState.length).toBe(2)
+})
+
 

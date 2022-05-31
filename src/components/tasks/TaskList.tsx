@@ -1,8 +1,8 @@
 import React from 'react';
-import './Main.css';
+import '../../styles/style.css';
 import {Task} from "./Task";
-import {TaskStatuses, TaskType} from "../api/todolist-api";
-import {FilterType} from "../reducers/TodoListsReducer";
+import {TaskStatuses, TaskType} from "../../api/todolist-api";
+import {FilterType} from "../../reducers/TodoListsReducer";
 
 
 type TaskListType = {

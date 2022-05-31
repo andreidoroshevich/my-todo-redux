@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.1/",
@@ -14,6 +14,42 @@ export type TodoListType = {
     order: number
     title: string
 }
+
+export type TaskType = {
+    id: string
+    title: string
+    status: TaskStatuses
+    description: string
+    todoListId: string
+    order: number
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+    addedDate: string
+}
+
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+}
+
+type GetTaskResponse = {
+    items: TaskType[]
+    totalCount: number
+    error: string | null
+}
+
+export type ResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    data: D
+}
+
 
 export enum TaskStatuses {
     New = 0,
@@ -31,35 +67,10 @@ export enum TaskPriorities {
 
 }
 
-export type TaskType = {
-    id: string
-    title: string
-    status: TaskStatuses
-    description: string
-    todoListId: string
-    order: number
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-    addedDate: string
-}
-
-type GetTaskResponse = {
-    item: TaskType[]
-    totalCount: number
-    error: string | null
-}
-
-type CommonResponseType<T> = {
-    resultCode: number
-    messages: Array<string>
-    fieldsErrors: Array<string>
-    data: T
-}
 
 export const TodoListAPI = {
     updateTodoList: (todolistId: string, title: string) => {
-        return instance.put<CommonResponseType<{}>>(`todo-lists/${todolistId}`, {title: title})
+        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
             .then((res) => {
                 return res.data
             })
@@ -71,13 +82,13 @@ export const TodoListAPI = {
             })
     },
     deleteTodoList: (todolistId: string) => {
-        return instance.delete<CommonResponseType<{}>>(`todo-lists/${todolistId}`)
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
             .then((res) => {
                 return res.data
             })
     },
     createTodoList: (title: string) => {
-        return instance.post<CommonResponseType<{ item: TodoListType }>>('todo-lists', {title})
+        return instance.post<ResponseType<{ item: TodoListType }>>('todo-lists', {title})
             .then((res) => {
                 return res.data
             })
@@ -92,22 +103,21 @@ export const TasksAPI = {
             })
     },
     createTask: (todolistId: string, title: string) => {
-        return instance.post<CommonResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title})
             .then((res) => {
                 return res.data
             })
     },
-    updateTask: (todolistId: string, taskId: string, title: string) => {
-        return instance.put<CommonResponseType<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
+    updateTask: (todolistId: string, taskId: string, model: UpdateTaskModelType) => {
+        return instance.put<UpdateTaskModelType, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
             .then((res) => {
                 return res.data
             })
     },
     deleteTask: (todolistId: string, taskId: string) => {
-        return instance.delete<CommonResponseType<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
             .then((res) => {
                 return res.data
             })
     },
-
 }

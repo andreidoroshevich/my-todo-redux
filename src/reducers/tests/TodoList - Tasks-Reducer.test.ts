@@ -1,7 +1,7 @@
-import {TaskObjectType} from "../App";
-import {addTodoListAC, TodoListDomainType, TodoListsReducer} from "./TodoListsReducer";
-import {TasksReducer} from "./TasksReducer";
-import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
+import {TaskObjectType} from "../../App";
+import {addTodoListAC, TodoListDomainType, TodoListsReducer} from "../TodoListsReducer";
+import {TasksReducer} from "../TasksReducer";
+import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
 
 test('new array should be added when new todolist is added', () => {
     const startState: TaskObjectType = {
@@ -80,7 +80,12 @@ test('new array should be added when new todolist is added', () => {
             }
         ]
     };
-    const action =  addTodoListAC( "new todolist");
+    const action =  addTodoListAC({
+        id:"158284255258525558",
+        title: "new todoList",
+        order: 0,
+        addedDate: ''
+    });
     const endState = TasksReducer(startState, action)
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k !== "todolistId1" && k !== "todolistId2");
@@ -94,12 +99,17 @@ test('new array should be added when new todolist is added', () => {
 test('ids should be equals', () => {
     const startTasksState: TaskObjectType = {};
     const startTodoListsState:  Array<TodoListDomainType> = [];
-    const action = addTodoListAC("new todolist");
+    const action = addTodoListAC({
+        id:"158284255258525558",
+        title: "new todoList",
+        order: 0,
+        addedDate: ''
+    });
     const endTasksState = TasksReducer(startTasksState, action)
     const endTodoListsState = TodoListsReducer(startTodoListsState, action)
     const keys = Object.keys(endTasksState);
     const idFromTasks = keys[0];
     const idFromTodoLists = endTodoListsState[0].id;
-    expect(idFromTasks).toBe(action.todoListID);
-    expect(idFromTodoLists).toBe(action.todoListID);
+    expect(idFromTasks).toBe(action.todoList.id);
+    expect(idFromTodoLists).toBe(action.todoList.id);
 });

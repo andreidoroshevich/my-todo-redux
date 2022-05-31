@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.8.1",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
+    "@reduxjs/toolkit": "https://pkg.csb.dev/reduxjs/redux-toolkit/commit/933aa4a1/@reduxjs/toolkit",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -24,6 +25,7 @@
     "react-redux": "^8.0.1",
     "react-scripts": "5.0.0",
     "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
     "typescript": "^4.6.2",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"

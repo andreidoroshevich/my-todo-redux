@@ -1,8 +1,8 @@
 import {v1} from "uuid";
-import {TaskObjectType} from "../App";
-import {TasksReducer} from "./TasksReducer";
-import {removeTodoListAC} from "./TodoListsReducer";
-import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
+import {TaskObjectType} from "../../App";
+import {addTaskAC, setTasksAC, TasksReducer} from "../TasksReducer";
+import {removeTodoListAC} from "../TodoListsReducer";
+import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
 
 let todoListId1 = v1()
 let todoListId2 = v1()
@@ -11,7 +11,6 @@ let taskId2 = v1()
 let taskId3 = v1()
 
 test("task should add", () => {
-
     const startState: TaskObjectType = {
         [todoListId1]: [
             {
@@ -91,8 +90,23 @@ test("task should add", () => {
         ],
     }
     let newTitle = "Redux"
+    const action = addTaskAC(
+        {
+            todoListId: todoListId1,
+            title: newTitle,
+            status: TaskStatuses.New,
+            addedDate: '',
+            description: "",
+            order: 0,
+            deadline: "",
+            priority: 0,
+            startDate: "",
+            id: "1-sfvsdfv-sdfbdf-sdf"
+        }
+    )
 
-    const endState = TasksReducer(startState, {type: "ADD-TASK", todoListID: todoListId1, title: newTitle})
+    const endState = TasksReducer(startState, action)
+
     expect(endState[todoListId1][0].title).toBe(newTitle)
     expect(endState[todoListId1].length).toBe(4)
     expect(endState[todoListId2].length).toBe(3)
@@ -515,3 +529,91 @@ test('property with todolistId should be deleted', () => {
     expect(keys.length).toBe(1);
     expect(endState["todolistId1"]).not.toBeDefined();
 });
+
+test('tasks should be added for todoLists', () => {
+    const startState: TaskObjectType = {
+        [todoListId1]: [
+            {
+                id: todoListId1,
+                title: "HTML&CSS",
+                status: TaskStatuses.New,
+                description: '',
+                todoListId: todoListId1,
+                order: 0,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+            },
+            {
+                id: todoListId1,
+                title: "JS/ES6",
+                status: TaskStatuses.Completed,
+                description: '',
+                todoListId: todoListId1,
+                order: 0,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+            },
+            {
+                id: todoListId1,
+                title: "React",
+                status: TaskStatuses.New,
+                description: '',
+                todoListId: todoListId1,
+                order: 0,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+            },
+        ],
+        [todoListId2]: [
+            {
+                id: todoListId2,
+                title: "Milk",
+                status: TaskStatuses.New,
+                description: '',
+                todoListId: todoListId2,
+                order: 0,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+            },
+            {
+                id: todoListId2,
+                title: "Sugar",
+                status: TaskStatuses.Completed,
+                description: '',
+                todoListId: todoListId2,
+                order: 0,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+            },
+            {
+                id: todoListId2,
+                title: "Book",
+                status: TaskStatuses.New,
+                description: '',
+                todoListId: todoListId2,
+                order: 0,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+            },
+        ],
+    };
+
+    const action = setTasksAC(todoListId1, startState[todoListId1])
+    const endState = TasksReducer({
+        todoListId1:[],
+    }, action)
+    expect(endState[todoListId1].length).toBe(3)
+});
+
