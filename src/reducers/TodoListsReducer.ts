@@ -1,5 +1,5 @@
 import {TodoListAPI, TodoListType} from "../api/todolist-api";
-import {AppActionsType, AppRootStateType, AppThunkType} from "../store/store";
+import {AppRootStateType, AppThunkType} from "../store/store";
 
 
 const initialState: Array<TodoListDomainType> = []
@@ -11,7 +11,7 @@ export type TodoListsActionType = removeTodoListACType
     | filterACType
     | setTodoListsType
 
-export const TodoListsReducer = (state = initialState, action: AppActionsType): Array<TodoListDomainType> => {
+export const TodoListsReducer = (state = initialState, action: TodoListsActionType): Array<TodoListDomainType> => {
     switch (action.type) {
         case "REMOVE-TODOLIST": {
             return state.filter(tl => tl.id !== action.todoListID)
@@ -89,31 +89,19 @@ export const setTodoListsAC = (todoLists: TodoListType[]) => {
     } as const
 }
 
-export const fetchTodoListsTC = (): AppThunkType => {
-    return (dispatch) => {
-        TodoListAPI.getTodoLists()
-            .then((res) => {
-                dispatch(setTodoListsAC(res))
-            })
-    }
+export const fetchTodoListsTC = (): AppThunkType => async dispatch => {
+    const res = await TodoListAPI.getTodoLists()
+    dispatch(setTodoListsAC(res))
 }
 
-export const deleteTodoListTC = (todoListID: string): AppThunkType => {
-    return (dispatch) => {
-        TodoListAPI.deleteTodoList(todoListID)
-            .then((res) => {
-                dispatch(removeTodoListAC(todoListID))
-            })
-    }
+export const deleteTodoListTC = (todoListID: string): AppThunkType => async dispatch => {
+    const res = await TodoListAPI.deleteTodoList(todoListID)
+    dispatch(removeTodoListAC(todoListID))
 }
 
-export const addTodoListTC = (title: string): AppThunkType => {
-    return (dispatch) => {
-        TodoListAPI.createTodoList(title)
-            .then((res) => {
+export const addTodoListTC = (title: string): AppThunkType => async dispatch => {
+    const res = await TodoListAPI.createTodoList(title)
                 dispatch(addTodoListAC(res.data.item))
-            })
-    }
 }
 
 export const updateTodoListTitleTC = (todolistId: string, title: string): AppThunkType => {

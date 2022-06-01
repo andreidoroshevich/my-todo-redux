@@ -1,7 +1,7 @@
 import {TaskObjectType} from "../App";
 import {addTodoListACType, removeTodoListACType, setTodoListsType} from "./TodoListsReducer";
 import {TasksAPI, TaskStatuses, TaskType, UpdateTaskModelType} from "../api/todolist-api";
-import {AppActionsType, AppRootStateType, AppThunkType} from "../store/store";
+import {AppRootStateType, AppThunkType} from "../store/store";
 
 export type TasksActionType = removeTaskACType
     | addTaskACType
@@ -14,7 +14,7 @@ export type TasksActionType = removeTaskACType
 
 const initialState: TaskObjectType = {}
 
-export const TasksReducer = (state: TaskObjectType = initialState, action: AppActionsType): TaskObjectType => {
+export const TasksReducer = (state: TaskObjectType = initialState, action: TasksActionType): TaskObjectType => {
     switch (action.type) {
         case "REMOVE-TASK": {
             return {
@@ -120,31 +120,19 @@ export const setTasksAC = (todoListID: string, tasks: TaskType[]) => {
     } as const
 }
 
-export const fetchTasksTC = (todoListID: string): AppThunkType => {
-    return (dispatch) => {
-        TasksAPI.getTasks(todoListID)
-            .then((res) => {
-                dispatch(setTasksAC(todoListID, res.items))
-            })
-    }
+export const fetchTasksTC = (todoListID: string): AppThunkType => async dispatch => {
+    const res = await TasksAPI.getTasks(todoListID)
+    dispatch(setTasksAC(todoListID, res.items))
 }
 
-export const deleteTaskTC = (todoListID: string, taskID: string):AppThunkType => {
-    return (dispatch) => {
-        TasksAPI.deleteTask(todoListID, taskID)
-            .then((res) => {
-                dispatch(removeTaskAC(todoListID, taskID))
-            })
-    }
+export const deleteTaskTC = (todoListID: string, taskID: string): AppThunkType => async dispatch => {
+    const res = await TasksAPI.deleteTask(todoListID, taskID)
+    dispatch(removeTaskAC(todoListID, taskID))
 }
 
-export const addTaskTC = (todoListId: string, title: string): AppThunkType => {
-    return (dispatch) => {
-        TasksAPI.createTask(todoListId, title)
-            .then((res) => {
-                dispatch(addTaskAC(res.data.item))
-            })
-    }
+export const addTaskTC = (todoListId: string, title: string): AppThunkType => async dispatch => {
+    const res = await TasksAPI.createTask(todoListId, title)
+    dispatch(addTaskAC(res.data.item))
 }
 
 export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses): AppThunkType => {
@@ -171,9 +159,8 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
     }
 }
 
-export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string): AppThunkType=> {
-    return (dispatch,
-            getState: () => AppRootStateType) => {
+export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string): AppThunkType => {
+    return (dispatch, getState: () => AppRootStateType) => {
 
         const currentTask = getState().tasks[todolistId].find(t => t.id === taskId)
 
