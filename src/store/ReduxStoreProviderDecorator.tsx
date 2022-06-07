@@ -4,14 +4,15 @@ import {combineReducers, legacy_createStore} from "redux";
 import {v1} from "uuid";
 import {TasksReducer} from "../reducers/TasksReducer";
 import {TodoListsReducer} from "../reducers/TodoListsReducer";
-import {AppRootStateType} from "./store";
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 
 
 const rootReducer = combineReducers({
     tasks: TasksReducer,
-    todoList: TodoListsReducer
+    todoList: TodoListsReducer,
 })
+
+type AppRootStateType = ReturnType<typeof rootReducer>
 
 const initialGlobalState:AppRootStateType = {
     todoList: [
@@ -21,6 +22,7 @@ const initialGlobalState:AppRootStateType = {
             filter: "All",
             addedDate: '',
             order: 0,
+            entityStatus: "idle",
         },
         {
             id: "todoListId2",
@@ -28,6 +30,7 @@ const initialGlobalState:AppRootStateType = {
             filter: "All",
             addedDate: '',
             order: 0,
+            entityStatus: "idle",
         }
     ] ,
     tasks: {
@@ -84,6 +87,7 @@ const initialGlobalState:AppRootStateType = {
             }
         ]
     }
+
 };
 export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState);
 

@@ -20,14 +20,16 @@ test("add new todolist", ()=>{
             title: "What to learn",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
         {
             id: todoListId2,
             title: "What to buy",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
     ]
     const endState = TodoListsReducer(startState, {type: "ADD-TODOLIST", todoList})
@@ -46,14 +48,16 @@ test("correct todolist should remove", ()=>{
             title: "What to learn",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
         {
             id: todoListId2,
             title: "What to buy",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
     ]
     const endState = TodoListsReducer(startState, {type: "REMOVE-TODOLIST", todoListID: todoListId1})
@@ -74,14 +78,16 @@ test("correct todolist should change title", ()=>{
             title: "What to learn",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
         {
             id: todoListId2,
             title: "What to buy",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
     ]
     const endState = TodoListsReducer(startState, {type: "CHANGE-TODOLIST-TITLE", todoListID: todoListId2, newTitle: newTodoListTitle})
@@ -102,14 +108,16 @@ test("correct todolist should change filter", ()=>{
             title: "What to learn",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
         {
             id: todoListId2,
             title: "What to buy",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
     ]
     const endState = TodoListsReducer(startState, {type: "FILTER", filter: newTodoListFilter, todoListID: todoListId2})
@@ -129,14 +137,16 @@ test("todoLists should be set to the state", ()=>{
             title: "What to learn",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
         {
             id: todoListId2,
             title: "What to buy",
             filter: "All",
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         },
     ]
     const action = setTodoListsAC(startState)

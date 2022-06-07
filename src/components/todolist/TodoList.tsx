@@ -9,12 +9,14 @@ import {TaskStatuses, TaskType} from "../../api/todolist-api";
 import {FilterType} from "../../reducers/TodoListsReducer";
 import {useDispatch} from "react-redux";
 import {fetchTasksTC} from "../../reducers/TasksReducer";
+import {RequestStatusType} from "../../reducers/AppReducer";
 
 
 type ToDoListType = {
     id: string
     title: string
     tasks: Array<TaskType>
+    entityStatus: RequestStatusType
     removeTask: (id: string, todoListID: string) => void
     changeFilter: (todoListID: string, filter: FilterType) => void
     addTask: (title: string, todoListID: string) => void
@@ -30,7 +32,7 @@ const TodoList = React.memo((props: ToDoListType) => {
     let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 
-   const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         // @ts-ignore
@@ -62,18 +64,27 @@ const TodoList = React.memo((props: ToDoListType) => {
         <div className="App">
             <div>
                 <span className={'delTodoList'}>
-                    <IconButton onClick={removeTodoListHandler}>
+                    <IconButton onClick={removeTodoListHandler} disabled={props.entityStatus === 'loading'}>
                             <Delete/>
                         </IconButton></span>
 
                 {/*<Button callBack={removeTodoListHandler} title={'x'}/>*/}
                 <Header id={props.id} title={props.title} changeTodoListTitle={props.changeTodoListTitle}/>
                 <div>
-                    <Input setError={setError} setTitle={setTitle} title={title}
-                           addTaskButtonHandler={addTaskButtonHandler} className={error ? 'error' : ''}/>
-                    <IconButton color="primary" onClick={() => addTaskButtonHandler(title)}>
+
+                    <Input setError={setError}
+                           setTitle={setTitle}
+                           title={title}
+                           addTaskButtonHandler={addTaskButtonHandler}
+                           className={error ? 'error' : ''}
+                           disabled={props.entityStatus}
+                    />
+                    <IconButton color="primary" onClick={() => addTaskButtonHandler(title)}
+                                disabled={props.entityStatus === 'loading'}
+                    >
                         <AddBox/>
                     </IconButton>
+
                     {error && <div className={'error-message'}>Field is required</div>}
 
                     <TaskList tasks={props.tasks} removeTask={props.removeTask}

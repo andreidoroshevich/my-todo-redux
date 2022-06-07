@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.8.2",
+    "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
+    "@mui/lab": "^5.0.0-alpha.84",
+    "@mui/material": "^5.8.2",
+    "@mui/styled-engine-sc": "^5.8.0",
     "@reduxjs/toolkit": "https://pkg.csb.dev/reduxjs/redux-toolkit/commit/933aa4a1/@reduxjs/toolkit",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
@@ -26,6 +29,7 @@
     "react-scripts": "5.0.0",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
+    "styled-components": "^5.3.5",
     "typescript": "^4.6.2",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
