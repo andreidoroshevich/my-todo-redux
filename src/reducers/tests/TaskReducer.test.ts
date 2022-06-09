@@ -1,8 +1,8 @@
 import {v1} from "uuid";
-import {TaskObjectType} from "../../App";
 import {addTaskAC, setTasksAC, TasksReducer} from "../TasksReducer";
 import {removeTodoListAC} from "../TodoListsReducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
+import {TaskObjectType} from "../../components/todolist/TodoLists";
 
 let todoListId1 = v1()
 let todoListId2 = v1()

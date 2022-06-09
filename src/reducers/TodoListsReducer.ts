@@ -1,6 +1,6 @@
 import {TodoListAPI, TodoListType} from "../api/todolist-api";
 import {AppRootStateType, AppThunkType} from "../store/store";
-import {AppActionsType, RequestStatusType, setAppErrorAC, setAppStatusAC} from "./AppReducer";
+import {AppActionsType, RequestStatusType, setAppStatusAC} from "./AppReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../common/utils/error-utils";
 

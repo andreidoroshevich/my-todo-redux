@@ -1,10 +1,10 @@
-import {TaskObjectType} from "../App";
 import {addTodoListACType, removeTodoListACType, ResultCodeStatus, setTodoListsType} from "./TodoListsReducer";
 import {TasksAPI, TaskStatuses, TaskType, UpdateTaskModelType} from "../api/todolist-api";
 import {AppRootStateType, AppThunkType} from "../store/store";
 import {AppActionsType, setAppErrorAC, setAppStatusAC} from "./AppReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../common/utils/error-utils";
+import {TaskObjectType} from "../components/todolist/TodoLists";
 
 export type TasksActionType = removeTaskACType
     | addTaskACType
