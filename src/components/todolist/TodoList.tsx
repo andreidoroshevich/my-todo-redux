@@ -7,9 +7,9 @@ import {Button, IconButton} from "@material-ui/core";
 import {AddBox, Delete} from "@material-ui/icons";
 import {TaskStatuses, TaskType} from "../../api/todolist-api";
 import {FilterType} from "../../reducers/TodoListsReducer";
-import {useDispatch} from "react-redux";
 import {fetchTasksTC} from "../../reducers/TasksReducer";
 import {RequestStatusType} from "../../reducers/AppReducer";
+import {useAppDispatch} from "../../store/store";
 
 
 type ToDoListType = {
@@ -32,10 +32,9 @@ const TodoList = React.memo((props: ToDoListType) => {
     let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(fetchTasksTC(props.id))
     }, [])
 

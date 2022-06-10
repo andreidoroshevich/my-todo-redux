@@ -71,7 +71,6 @@ export const TasksReducer = (state: TaskObjectType = initialState, action: Tasks
             copyState[action.todoListID] = action.tasks
             return copyState
         }
-
         default:
             return state
     }
@@ -90,14 +89,12 @@ export const removeTaskAC = (todoListID: string, taskID: string) => {
         todoListID,
     } as const
 }
-
 export const addTaskAC = (task: TaskType) => {
     return {
         type: 'ADD-TASK',
         task
     } as const
 }
-
 export const changeStatusTaskAC = (todoListID: string, taskID: string, status: TaskStatuses) => {
     return {
         type: 'CHANGE-TASK-STATUS',
@@ -106,7 +103,6 @@ export const changeStatusTaskAC = (todoListID: string, taskID: string, status: T
         status
     } as const
 }
-
 export const changeTitleTaskAC = (todoListID: string, taskID: string, newTitle: string) => {
     return {
         type: 'CHANGE-TASK-TITLE',
@@ -115,7 +111,6 @@ export const changeTitleTaskAC = (todoListID: string, taskID: string, newTitle: 
         newTitle
     } as const
 }
-
 export const setTasksAC = (todoListID: string, tasks: TaskType[]) => {
     return {
         type: 'SET-TASKS',
@@ -134,7 +129,6 @@ export const fetchTasksTC = (todoListID: string): AppThunkType => async dispatch
         handleServerNetworkError(dispatch, (error as AxiosError).message)
     }
 }
-
 export const deleteTaskTC = (todoListID: string, taskID: string): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
@@ -149,7 +143,6 @@ export const deleteTaskTC = (todoListID: string, taskID: string): AppThunkType =
         handleServerNetworkError(dispatch, (error as AxiosError).message)
     }
 }
-
 export const addTaskTC = (todoListId: string, title: string): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
@@ -164,7 +157,6 @@ export const addTaskTC = (todoListId: string, title: string): AppThunkType => as
         handleServerNetworkError(dispatch, (error as AxiosError).message)
     }
 }
-
 export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses): AppThunkType => {
 
     return (dispatch,
@@ -199,7 +191,6 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
         }
     }
 }
-
 export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string): AppThunkType => {
     return (dispatch, getState: () => AppRootStateType) => {
         dispatch(setAppStatusAC('loading'))

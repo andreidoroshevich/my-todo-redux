@@ -17,7 +17,7 @@ import {addTaskTC, deleteTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "..
 import {TaskStatuses, TaskType} from "../../api/todolist-api";
 import {ErrorSnackbar} from "../../common/components/ErrorSnackBar";
 import UnchangeableHeader from "../headers/UnchangeableHeader";
-import {LinearProgress} from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 import {Input} from "../../common/components/Input";
 
 export type TaskObjectType = {
