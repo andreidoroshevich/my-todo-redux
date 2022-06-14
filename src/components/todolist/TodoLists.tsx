@@ -5,13 +5,14 @@ import {
     addTodoListTC,
     fetchTodoListsTC,
     filterAC,
-    FilterType, removeTodoListTC,
+    FilterType,
+    removeTodoListTC,
     TodoListDomainType,
     updateTodoListTitleTC,
 } from "../../reducers/TodoListsReducer";
 import AddBox from "@material-ui/icons/AddBox";
 import IconButton from "@material-ui/core/IconButton";
-import {useAppDispatch, useAppSelector} from "../../store/store";
+import {AppRootStateType, useAppDispatch, useAppSelector} from "../../store/store";
 import {RequestStatusType} from "../../reducers/AppReducer";
 import {addTaskTC, deleteTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "../../reducers/TasksReducer";
 import {TaskStatuses, TaskType} from "../../api/todolist-api";
@@ -19,6 +20,12 @@ import {ErrorSnackbar} from "../../common/components/ErrorSnackBar";
 import UnchangeableHeader from "../headers/UnchangeableHeader";
 import LinearProgress from "@mui/material/LinearProgress";
 import {Input} from "../../common/components/Input";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Button from '@mui/material/Button';
+import Toolbar from '@mui/material/Toolbar';
+import {logoutTC} from "../../reducers/AuthReducer";
 
 export type TaskObjectType = {
     [key: string]: TaskType[]
@@ -33,11 +40,17 @@ function TodoLists() {
     const todoLists = useAppSelector<Array<TodoListDomainType>>(state => state.todoList)
     const tasks = useAppSelector<TaskObjectType>(state => state.tasks)
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
-    console.log(status)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const navigate = useNavigate()
+
 
     useEffect(() => {
-        dispatch(fetchTodoListsTC())
-    }, [])
+        if (isLoggedIn) {
+            dispatch(fetchTodoListsTC())
+        } else {
+            navigate('login')
+        }
+    }, [isLoggedIn])
 
 //функция удаления таски
     const removeTask = useCallback((taskID: string, todoListId: string) => {
@@ -77,7 +90,6 @@ function TodoLists() {
 // функция добавления тудулиста
     const addTodolist = useCallback((title: string) => {
         if (title.trim() !== '') {
-
             dispatch(addTodoListTC(title))
             setTitle('')
         } else {
@@ -87,15 +99,24 @@ function TodoLists() {
 
 // функция редактирования названия тудулиста
     const changeTodoListTitle = useCallback((todoListID: string, newTitle: string) => {
-
         dispatch(updateTodoListTitleTC(todoListID, newTitle))
     }, [dispatch])
 
+    const logoutHandler = () => {
+        dispatch(logoutTC())
+    }
 
     return (
         <>
-            {status === 'loading' && <LinearProgress/> }
             <ErrorSnackbar/>
+            <AppBar position="static">
+                <Toolbar>
+
+                    {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Logout</Button>}
+
+                </Toolbar>
+                {status === 'loading' && <LinearProgress/>}
+            </AppBar>
 
             <div className={"newTodo"}>
                 <UnchangeableHeader title={"Add new Todolist"}/>
