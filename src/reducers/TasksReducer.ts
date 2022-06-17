@@ -1,7 +1,12 @@
-import {addTodoListACType, removeTodoListACType, ResultCodeStatus, setTodoListsType} from "./TodoListsReducer";
+import {
+    addTodoListACType, changeTodolistEntityStatusAC,
+    removeTodoListACType,
+    ResultCodeStatus,
+    setTodoListsType
+} from "./TodoListsReducer";
 import {TasksAPI, TaskStatuses, TaskType, UpdateTaskModelType} from "../api/todolist-api";
 import {AppRootStateType, AppThunkType} from "../store/store";
-import {AppActionsType, setAppErrorAC, setAppStatusAC} from "./AppReducer";
+import {AppActionsType, RequestStatusType, setAppErrorAC, setAppStatusAC} from "./AppReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../common/utils/error-utils";
 import {TaskObjectType} from "../components/todolist/TodoLists";
@@ -16,9 +21,10 @@ export type TasksActionType = removeTaskACType
     | setTasksACType
     | AppActionsType
 
+
 const initialState: TaskObjectType = {}
 
-export const TasksReducer = (state: TaskObjectType = initialState, action: TasksActionType): TaskObjectType => {
+export const TasksReducer = (state = initialState, action: TasksActionType): TaskObjectType => {
     switch (action.type) {
         case "REMOVE-TASK": {
             return {
@@ -71,6 +77,7 @@ export const TasksReducer = (state: TaskObjectType = initialState, action: Tasks
             copyState[action.todoListID] = action.tasks
             return copyState
         }
+
         default:
             return state
     }
@@ -118,6 +125,15 @@ export const setTasksAC = (todoListID: string, tasks: TaskType[]) => {
         tasks
     } as const
 }
+export const changeTaskEntityStatusAC = (todoListID: string, taskID: string, entityTaskStatus: RequestStatusType) => {
+    return {
+        type: 'CHANGE-TASK-ENTITY-STATUS',
+        todoListID,
+        taskID,
+        entityTaskStatus
+    } as const
+}
+
 
 export const fetchTasksTC = (todoListID: string): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
@@ -131,6 +147,7 @@ export const fetchTasksTC = (todoListID: string): AppThunkType => async dispatch
 }
 export const deleteTaskTC = (todoListID: string, taskID: string): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
+    dispatch(changeTodolistEntityStatusAC(todoListID, 'loading'))
     try {
         const res = await TasksAPI.deleteTask(todoListID, taskID)
         if (res.resultCode === ResultCodeStatus.success) {
@@ -141,6 +158,10 @@ export const deleteTaskTC = (todoListID: string, taskID: string): AppThunkType =
         }
     } catch (error) {
         handleServerNetworkError(dispatch, (error as AxiosError).message)
+    }
+    finally
+    {
+        dispatch(changeTodolistEntityStatusAC(todoListID, 'idle'))
     }
 }
 export const addTaskTC = (todoListId: string, title: string): AppThunkType => async dispatch => {

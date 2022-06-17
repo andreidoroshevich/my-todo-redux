@@ -3,12 +3,14 @@ import '../../styles/style.css';
 import {Task} from "./Task";
 import {TaskStatuses, TaskType} from "../../api/todolist-api";
 import {FilterType} from "../../reducers/TodoListsReducer";
+import {RequestStatusType} from "../../reducers/AppReducer";
 
 
 type TaskListType = {
     todoListID: string
     tasks: Array<TaskType>
     filter: FilterType
+    entityStatus: RequestStatusType
     removeTask: (id: string, todoListID: string) => void
     changeTaskStatus: (todoListID: string, taskID: string, status: TaskStatuses) => void
     changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void
@@ -35,6 +37,7 @@ const TaskList = React.memo((props: TaskListType) => {
                         changeTaskTitle={props.changeTaskTitle}
                         todoListID={props.todoListID}
                         key={t.id}
+                        entityStatus={props.entityStatus}
                     />
                 )}
                 </tbody>

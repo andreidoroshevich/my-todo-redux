@@ -65,6 +65,7 @@ const Template: ComponentStory<typeof Task> = () => {
                  changeTaskStatus={changeTaskStatus}
                  changeTaskTitle={action('changeTaskTitle')}
                  task={task}
+                 entityStatus={'idle'}
     />
 }
 

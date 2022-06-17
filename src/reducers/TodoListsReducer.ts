@@ -64,7 +64,6 @@ export type TodoListDomainType = TodoListType & {
     entityStatus: RequestStatusType
 }
 
-
 export const removeTodoListAC = (todoListID: string) => {
     return {
         type: 'REMOVE-TODOLIST',

@@ -90,21 +90,26 @@ const TodoList = React.memo((props: ToDoListType) => {
                               changeTaskStatus={props.changeTaskStatus} todoListID={props.id}
                               changeTaskTitle={props.changeTaskTitle}
                               filter={props.filter}
+                              entityStatus={props.entityStatus}
                     />
                     <div className={'filterButton'}>
 
                         <Button variant={props.filter === 'All' ? 'outlined' : 'text'}
                                 onClick={onAllClickHandler}
                                 color={'default'}
+                                disabled={props.entityStatus === 'loading'}
                         >All
                         </Button>
                         <Button variant={props.filter === 'Active' ? 'outlined' : 'text'}
                                 onClick={onActiveClickHandler}
-                                color={'primary'}>Active
+                                color={'primary'}
+                                disabled={props.entityStatus === 'loading'}>Active
                         </Button>
                         <Button variant={props.filter === 'Completed' ? 'outlined' : 'text'}
                                 onClick={onCompletedClickHandler}
-                                color={'secondary'}>Completed
+                                color={'secondary'}
+                                disabled={props.entityStatus === 'loading'}
+                        >Completed
                         </Button>
                     </div>
                 </div>

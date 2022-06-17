@@ -28,6 +28,7 @@ export type TaskType = {
     addedDate: string
 }
 
+
 export type UpdateTaskModelType = {
     title: string
     description: string
