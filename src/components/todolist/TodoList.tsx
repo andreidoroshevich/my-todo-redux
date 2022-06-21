@@ -67,7 +67,6 @@ const TodoList = React.memo((props: ToDoListType) => {
                             <Delete/>
                         </IconButton></span>
 
-                {/*<Button callBack={removeTodoListHandler} title={'x'}/>*/}
                 <Header id={props.id} title={props.title} changeTodoListTitle={props.changeTodoListTitle}/>
                 <div>
 

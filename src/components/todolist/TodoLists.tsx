@@ -59,7 +59,7 @@ function TodoLists() {
 
 // функции для сортировки
     const changeFilter = useCallback((todoListId: string, filter: FilterType) => {
-        dispatch(filterAC(todoListId, filter))
+        dispatch(filterAC({todoListID: todoListId, filter:filter}))
     }, [dispatch])
 
 //функция добавления новых таск

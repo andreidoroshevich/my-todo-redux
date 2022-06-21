@@ -11,7 +11,7 @@
     "@mui/lab": "^5.0.0-alpha.84",
     "@mui/material": "^5.8.2",
     "@mui/styled-engine-sc": "^5.8.0",
-    "@reduxjs/toolkit": "https://pkg.csb.dev/reduxjs/redux-toolkit/commit/933aa4a1/@reduxjs/toolkit",
+    "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
