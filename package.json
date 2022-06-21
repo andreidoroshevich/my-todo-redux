@@ -1,5 +1,6 @@
 {
   "name": "my-todo-redux",
+  "homepage": "https://andreidoroshevich.github.io/todolist",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -45,7 +46,9 @@
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook -s public",
     "jest:integration": "jest -c integration/jest.config.js",
-    "test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration"
+    "test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -86,6 +89,7 @@
     "@storybook/preset-create-react-app": "^4.1.1",
     "@storybook/react": "^6.5.5",
     "@storybook/testing-library": "^0.0.11",
+    "gh-pages": "^4.0.0",
     "jest-puppeteer": "^6.1.0",
     "puppeteer": "^14.1.0",
     "start-server-and-test": "^1.14.0",
