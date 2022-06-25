@@ -11,14 +11,12 @@ import {removeTodoListAC} from "../TodoListsReducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
 import {TaskObjectType} from "../../components/todolist/TodoLists";
 
-
 let todoListId1: string
 let todoListId2: string
 let taskId1: string
 let taskId2: string
 let taskId3: string
 let startState: TaskObjectType
-
 
 beforeEach(() => {
     todoListId1 = v1()

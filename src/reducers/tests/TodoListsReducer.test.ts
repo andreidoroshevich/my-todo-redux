@@ -9,7 +9,6 @@ import {
 } from "../TodoListsReducer";
 import {TodoListType} from "../../api/todolist-api";
 
-
 let todoListId1: string
 let todoListId2: string
 let startState: Array<TodoListDomainType>
@@ -36,7 +35,6 @@ beforeEach(()=>{
         },
     ]
 })
-
 
 test("add new todolist", ()=>{
 
