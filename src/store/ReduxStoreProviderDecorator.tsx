@@ -1,20 +1,28 @@
 import React from "react";
 import {Provider} from "react-redux";
-import {combineReducers, legacy_createStore} from "redux";
+import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
 import {v1} from "uuid";
 import {TasksReducer} from "../reducers/TasksReducer";
 import {TodoListsReducer} from "../reducers/TodoListsReducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
+import {AppReducer} from "../reducers/AppReducer";
+import {AuthReducer} from "../reducers/AuthReducer";
+import {RootReducerType} from "./store";
+import thunkMiddleware from "redux-thunk";
+import {configureStore} from "@reduxjs/toolkit";
+import {HashRouter} from "react-router-dom";
 
 
-const rootReducer = combineReducers({
+const rootReducer: RootReducerType = combineReducers({
     tasks: TasksReducer,
     todoList: TodoListsReducer,
+    app: AppReducer,
+    auth: AuthReducer
 })
 
 type AppRootStateType = ReturnType<typeof rootReducer>
 
-const initialGlobalState:AppRootStateType = {
+const initialGlobalState: AppRootStateType = {
     todoList: [
         {
             id: "todoListId1",
@@ -32,7 +40,7 @@ const initialGlobalState:AppRootStateType = {
             order: 0,
             entityStatus: "idle",
         }
-    ] ,
+    ],
     tasks: {
         ["todoListId1"]: [
             {
@@ -86,13 +94,24 @@ const initialGlobalState:AppRootStateType = {
                 addedDate: '',
             }
         ]
-    }
-
+    },
+    app: {
+        error: null,
+        status: 'idle',
+        isInitialized: false
+    },
+    auth: {isLoggedIn: true}
 };
-export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState);
+export const storyBookStore = configureStore({
+    reducer: rootReducer,
+    preloadedState: initialGlobalState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunkMiddleware)
+})
 
-export const ReduxStoreProviderDecorator = (storyFn: ()=>React.ReactNode)=>{
+export const ReduxStoreProviderDecorator = (storyFn: () => any) => {
+    return <Provider store={storyBookStore}>{storyFn()}</Provider>
+}
 
-return <Provider store={storyBookStore}>{storyFn()}</Provider>
-
+export const BrowserRouterDecorator = (storyFn: () => any) => {
+    return <HashRouter>{storyFn()}</HashRouter>
 }

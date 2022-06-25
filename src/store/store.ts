@@ -21,6 +21,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>getDefaultMiddleware().prepend(thunkMiddleware)
 })
 
+export type RootReducerType = typeof rootReducer
 export type AppRootStateType = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch: () => AppDispatch = useDispatch

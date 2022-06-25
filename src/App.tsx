@@ -8,6 +8,8 @@ import {useSelector} from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 
 
+
+
 function App() {
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
 
