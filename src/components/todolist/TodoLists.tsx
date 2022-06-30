@@ -53,8 +53,8 @@ function TodoLists() {
     }, [isLoggedIn])
 
 //функция удаления таски
-    const removeTask = useCallback((taskID: string, todoListId: string) => {
-        dispatch(deleteTaskTC(todoListId, taskID))
+    const removeTask = useCallback((taskID: string, todoListID: string) => {
+        dispatch(deleteTaskTC({todoListID, taskID}))
     }, [dispatch])
 
 // функции для сортировки
@@ -63,8 +63,8 @@ function TodoLists() {
     }, [dispatch])
 
 //функция добавления новых таск
-    const addTask = useCallback((title: string, todoListID: string) => {
-        dispatch(addTaskTC(todoListID, title))
+    const addTask = useCallback((title: string, todoListId: string) => {
+        dispatch(addTaskTC({todoListId, title}))
     }, [dispatch])
 
 // функция изменения статуса таски - работа с чекбоксами

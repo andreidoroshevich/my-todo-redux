@@ -1,10 +1,8 @@
 import {v1} from "uuid";
 import {
-    addTaskAC,
+    addTaskTC,
     changeStatusTaskAC,
-    changeTitleTaskAC,
-    removeTaskAC,
-    setTasksAC,
+    changeTitleTaskAC, deleteTaskTC, fetchTasksTC,
     TasksReducer
 } from "../TasksReducer";
 import {removeTodoListAC} from "../TodoListsReducer";
@@ -109,7 +107,7 @@ beforeEach(() => {
 test("task should add", () => {
 
     const newTitle = "Redux"
-    const action = addTaskAC({task: {
+    const action = addTaskTC.fulfilled({task: {
             todoListId: todoListId1,
             title: newTitle,
             status: TaskStatuses.New,
@@ -120,7 +118,8 @@ test("task should add", () => {
             priority: 0,
             startDate: "",
             id: "1-sfvsdfv-sdfbdf-sdf"
-        }})
+        }},'', {todoListId: todoListId1,
+        title: newTitle,} )
     const endState = TasksReducer(startState, action)
 
     expect(endState[todoListId1][0].title).toBe(newTitle)
@@ -131,7 +130,8 @@ test("task should add", () => {
 })
 
 test("correct task should remove", () => {
-    const action = removeTaskAC({todoListID: todoListId1, taskID: taskId2})
+    let param = {todoListID: todoListId1, taskID: taskId2};
+    const action = deleteTaskTC.fulfilled(param,'',param)
     const endState = TasksReducer(startState, action)
     expect(endState).toEqual({
         [todoListId1]: [
@@ -230,7 +230,7 @@ test('property with todolistId should be deleted', () => {
 
 test('tasks should be added for todoLists', () => {
 
-    const action = setTasksAC({todoListID:todoListId1, tasks: startState[todoListId1]})
+    const action = fetchTasksTC.fulfilled({todoListID:todoListId1, tasks: startState[todoListId1]}, '',todoListId1)
     const endState = TasksReducer({
         todoListId1: [],
     }, action)
