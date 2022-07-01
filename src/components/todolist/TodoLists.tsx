@@ -50,7 +50,7 @@ function TodoLists() {
         } else {
             navigate('login')
         }
-    }, [isLoggedIn])
+    }, [isLoggedIn, dispatch, navigate])
 
 //функция удаления таски
     const removeTask = useCallback((taskID: string, todoListID: string) => {
@@ -70,27 +70,26 @@ function TodoLists() {
 // функция изменения статуса таски - работа с чекбоксами
     const changeTaskStatus = useCallback((todoListID: string, taskID: string, status: TaskStatuses) => {
 
-        dispatch(updateTaskStatusTC(todoListID, taskID, status))
+        dispatch(updateTaskStatusTC({todoListID, taskID, status}))
     }, [dispatch])
 
 // функция изменения названия таски
     const changeTaskTitle = useCallback((taskID: string, newTitle: string, todoListID: string) => {
 
-        dispatch(updateTaskTitleTC(todoListID, taskID, newTitle))
+        dispatch(updateTaskTitleTC({todoListID, taskID, newTitle}))
 
     }, [dispatch])
 
 //функция удаления todoList
     const removeTodoList = useCallback((todoListID: string) => {
         // const action = deleteTodoListTC(todoListID)
-
-        dispatch(removeTodoListTC(todoListID))
+        dispatch(removeTodoListTC({todoListID}))
     }, [dispatch])
 
 // функция добавления тудулиста
     const addTodolist = useCallback((title: string) => {
         if (title.trim() !== '') {
-            dispatch(addTodoListTC(title))
+            dispatch(addTodoListTC({title}))
             setTitle('')
         } else {
             setError('Title is required')
@@ -99,7 +98,7 @@ function TodoLists() {
 
 // функция редактирования названия тудулиста
     const changeTodoListTitle = useCallback((todoListID: string, newTitle: string) => {
-        dispatch(updateTodoListTitleTC(todoListID, newTitle))
+        dispatch(updateTodoListTitleTC({todoListID, newTitle}))
     }, [dispatch])
 
     const logoutHandler = () => {

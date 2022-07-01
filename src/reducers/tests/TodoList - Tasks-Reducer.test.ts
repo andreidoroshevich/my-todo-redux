@@ -1,4 +1,4 @@
-import {addTodoListAC, TodoListDomainType, TodoListsReducer} from "../TodoListsReducer";
+import {addTodoListTC, TodoListDomainType, TodoListsReducer} from "../TodoListsReducer";
 import {TasksReducer} from "../TasksReducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
 import {TaskObjectType} from "../../components/todolist/TodoLists";
@@ -80,12 +80,13 @@ test('new array should be added when new todolist is added', () => {
             }
         ]
     };
-    const action =  addTodoListAC({todoList: {
+    const todoList =  {
             id:"158284255258525558",
             title: "new todoList",
             order: 0,
             addedDate: ''
-        }});
+        }
+    const action =  addTodoListTC.fulfilled({todoList:todoList}, '', {title: todoList.title});
     const endState = TasksReducer(startState, action)
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k !== "todolistId1" && k !== "todolistId2");
@@ -102,12 +103,15 @@ test('ids should be equals', () => {
 
     const startTasksState: TaskObjectType = {};
     const startTodoListsState:  Array<TodoListDomainType> = [];
-    const action = addTodoListAC({todoList: {
-            id:"158284255258525558",
-            title: "new todoList",
-            order: 0,
-            addedDate: ''
-        }});
+
+    const todoList= {
+        id:"158284255258525558",
+        title: "new todoList",
+        order: 0,
+        addedDate: ''
+    }
+    const param = {todoList:todoList}
+    const action = addTodoListTC.fulfilled(param,'',{title: todoList.title})
     const endTasksState = TasksReducer(startTasksState, action)
     const endTodoListsState = TodoListsReducer(startTodoListsState, action)
     const keys = Object.keys(endTasksState);

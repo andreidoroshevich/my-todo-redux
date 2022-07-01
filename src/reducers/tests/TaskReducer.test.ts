@@ -1,11 +1,13 @@
 import {v1} from "uuid";
 import {
     addTaskTC,
-    changeStatusTaskAC,
-    changeTitleTaskAC, deleteTaskTC, fetchTasksTC,
-    TasksReducer
+    deleteTaskTC,
+    fetchTasksTC,
+    TasksReducer,
+    updateTaskStatusTC,
+    updateTaskTitleTC
 } from "../TasksReducer";
-import {removeTodoListAC} from "../TodoListsReducer";
+import {removeTodoListTC} from "../TodoListsReducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
 import {TaskObjectType} from "../../components/todolist/TodoLists";
 
@@ -203,7 +205,8 @@ test("correct task should remove", () => {
 
 test("correct task should change status", () => {
     const newStatus = TaskStatuses.New
-    const action = changeStatusTaskAC({todoListID: todoListId1, taskID:taskId2, status:newStatus})
+    const param = {todoListID: todoListId1, taskID:taskId2, status:newStatus}
+    const action = updateTaskStatusTC.fulfilled(param,'',param)
     const endState = TasksReducer(startState, action)
 
     expect(endState[todoListId1][1].status).toBe(newStatus)
@@ -212,7 +215,8 @@ test("correct task should change status", () => {
 test("correct task should change it's title", () => {
 
     const newTaskTitle = "RestAPI"
-    const action = changeTitleTaskAC({todoListID:todoListId1, taskID:taskId2, newTitle: newTaskTitle})
+    const param = {todoListID:todoListId1, taskID:taskId2, newTitle: newTaskTitle}
+    const action = updateTaskTitleTC.fulfilled(param, 'requestId',param)
     const endState = TasksReducer(startState, action)
 
     expect(endState[todoListId1][1].title).toBe(newTaskTitle)
@@ -220,7 +224,8 @@ test("correct task should change it's title", () => {
 
 test('property with todolistId should be deleted', () => {
 
-    const action = removeTodoListAC({todoListID:todoListId1});
+    const param = {todoListID: todoListId1}
+    const action = removeTodoListTC.fulfilled(param,'', param)
     const endState = TasksReducer(startState, action)
     const keys = Object.keys(endState);
 
